@@ -6,6 +6,7 @@
   <title>Custom 360 Image Inside Sphere</title>
   <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
   <script>
+    // JavaScript to change the image source on button click
     let imageIndex = 1;
 
     function changeImage() {
@@ -18,10 +19,10 @@
 </head>
 <body>
   <a-scene>
-    <!-- Reduced Sphere Size -->
+    <!-- Sphere with 360 Image, ID added for easy access -->
     <a-entity 
       id="sphere"
-      geometry="primitive: sphere; radius: 5" 
+      geometry="primitive: sphere; radius: 10" 
       material="src: 1.JPG; side: back; shader: flat" 
       scale="-1 1 1">
     </a-entity>
@@ -38,16 +39,16 @@
       line="color: #FF0000; opacity: 0.5">
     </a-entity>
 
-    <!-- Reduced Button Size -->
+    <!-- Simple Button that changes image on click -->
     <a-box 
       class="clickable"
-      position="0 0 -3" 
-      depth="0.05" width="0.5" height="0.2" 
+      position="0 0 -5" 
+      depth="0.1" width="1" height="0.5" 
       color="#4CC3D9"
-      event-set__click="scale: 1.1 1.1 1.1; color: #3e9e8f" 
+      event-set__click="scale: 1.2 1.2 1.2; color: #3e9e8f" 
       event-set__clickend="scale: 1 1 1; color: #4CC3D9"
       onclick="changeImage()">
-      <a-text value="Change" position="0 0 0.1" align="center" color="black" width="1.5"></a-text>
+      <a-text value="Change Image" position="0 0 0.1" align="center" color="#FFFFFF"></a-text>
     </a-box>
   </a-scene>
 </body>
