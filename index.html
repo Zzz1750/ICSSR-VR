@@ -3,53 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom 360 Image Inside Sphere</title>
-  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-  <script>
-    // JavaScript to change the image source on button click
-    let imageIndex = 1;
-
-    function changeImage() {
-      // Update the image source based on the image index
-      imageIndex = (imageIndex % 10) + 1; // Loop back to 1 after 10
-      const newImage = `${imageIndex}.JPG`;
-      document.querySelector('#sphere').setAttribute('material', 'src', newImage);
-    }
-  </script>
+  <title>Document</title>
 </head>
 <body>
-  <a-scene>
-    <!-- Sphere with 360 Image, ID added for easy access -->
-    <a-entity 
-      id="sphere"
-      geometry="primitive: sphere; radius: 10" 
-      material="src: 1.JPG; side: back; shader: flat" 
-      scale="-1 1 1">
-    </a-entity>
-
-    <!-- Camera and Controls -->
-    <a-entity camera look-controls wasd-controls>
-    </a-entity>
-
-    <!-- Right Hand Controller -->
-    <a-entity 
-      id="right-controller"
-      laser-controls="hand: right" 
-      raycaster="objects: .clickable"
-      line="color: #FF0000; opacity: 0.5">
-    </a-entity>
-
-    <!-- Simple Button that changes image on click -->
-    <a-box 
-      class="clickable"
-      position="0 0 -5" 
-      depth="0.1" width="1" height="0.5" 
-      color="#4CC3D9"
-      event-set__click="scale: 1.2 1.2 1.2; color: #3e9e8f" 
-      event-set__clickend="scale: 1 1 1; color: #4CC3D9"
-      onclick="changeImage()">
-      <a-text value="Change Image" position="0 0 0.1" align="center" color="#FFFFFF" width="3"></a-text>
-    </a-box>
-  </a-scene>
+  <a href="https://drive.google.com/file/d/14XEZFQ-wgnNOv_m4tM5Etv9b0cjXe4ED/view?usp=sharing">click</a>
 </body>
 </html>
