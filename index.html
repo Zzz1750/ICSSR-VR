@@ -3,10 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Chettinad Image Review</title>
+  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    #scene_id {
+      display: none;
+    }
+    #view_vr {
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #1c88e0;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #review_heading{
+      color: black;
+      position: absolute;
+      top: 5%;
+      left: 20%;
+      transform: translate(-50%,-50);
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    }
+    #description{
+      color: black;
+      position: absolute;
+      top: 41%;
+      left: 50%;
+      width: 80%;
+      transform: translate(-50%,-50%);
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 30px;
+    }
+    #back{
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+    #formm{
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      height: 50%;
+      width: 40%;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 0 50px 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <script>
+    let imageIndex = 1;
+
+    function changeImage() {
+      imageIndex = (imageIndex % 10) + 1;
+      const newImage = `${imageIndex}.JPG`;
+      document.querySelector('#sphere').setAttribute('material', 'src', newImage);
+    }
+
+    function enterVR() {
+      document.getElementById('view_vr').style.display = 'none';
+      const scene = document.getElementById('scene_id');
+      scene.style.display = 'block';
+      scene.enterVR();
+    }
+  </script>
 </head>
 <body>
-  <a href="https://drive.google.com/file/d/1BjhSEJtuS_BqDJgh7QBSfvs1eCi41keE/view?usp=sharing">click</a>
-  <p>https://drive.google.com/file/d/1yb3BtVkT8CuehKKzzwS-1V5xIOGtDini/view?usp=sharing</p>
+  <div id="page1">
+    <img src="./background_image.jpg" alt="" id="back">
+    <div id="formm">
+      <h1 id="review_heading">Chettinad Image Review</h1>
+      <ul id="description">
+        <li>This is a Sample VR Image Reviewer</li>
+        <li>Use VR Headset</li>
+        <li>Use Hand Controller to Change Image</li>
+        <li>It might take some time in the beginning for changing the image, but will be fixed automatically</li>
+        <li>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=example@example.com&su=Subject&body=Body%20Text" target="_blank">Feedback</a>
+        </li>
+      </ul>
+      <button id="view_vr" onclick="enterVR()">View in VR</button>
+    </div>
+   
+  </div>
+  
+  <a-scene id="scene_id">
+    <a-entity 
+      id="sphere"
+      geometry="primitive: sphere; radius: 10" 
+      material="src: 1.JPG; side: back; shader: flat" 
+      scale="-1 1 1">
+    </a-entity>
+
+    <a-entity camera look-controls wasd-controls>
+    </a-entity>
+
+    <a-entity 
+      id="right-controller"
+      laser-controls="hand: right" 
+      raycaster="objects: .clickable"
+      line="color: #FF0000; opacity: 0.5">
+    </a-entity>
+
+    <a-box 
+      class="clickable"
+      position="0 0 -5" 
+      depth="0.1" width="1" height="0.5" 
+      color="#4CC3D9"
+      event-set__click="scale: 1.2 1.2 1.2; color: #3e9e8f" 
+      event-set__clickend="scale: 1 1 1; color: #4CC3D9"
+      onclick="changeImage()">
+      <a-text value="Change Image" position="0 0 0.1" align="center" color="#FFFFFF" width="3"></a-text>
+    </a-box>
+  </a-scene>
 </body>
 </html>
+  
