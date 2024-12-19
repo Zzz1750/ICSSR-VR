@@ -140,7 +140,7 @@
 
     function changeImage() {
       imageIndex = (imageIndex % 10) + 1;
-      const newImage = `${imageIndex}.JPG`;
+      const newImage = `${imageIndex}.png`;
       document.querySelector('#sphere').setAttribute('material', 'src', newImage);
     }
 
@@ -184,7 +184,7 @@
         <a-entity 
           id="rotatingSphere"
           geometry="primitive: sphere; radius: 5000" 
-          material="shader: flat; src: 1.JPG; side: back" 
+          material="shader: flat; src: 1.png; side: back" 
           position="0 0 0">
 
           <a-entity 
@@ -216,7 +216,7 @@
   </script>
 
   <script>
-    const images = ["1.JPG", "2.JPG", "3.JPG", "4.JPG"];
+    const images = ["1.png", "2.png", "3.png", "4.png"];
     let currentImageIndex = 0;
 
     const sphere = document.querySelector("#rotatingSphere");
