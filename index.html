@@ -3,134 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chettinad Image Review</title>
-  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: black;
-    }
-    #scene_id {
-      display: none;
-    }
-    #view_vr {
-      position: absolute;
-      top: 85%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 15px 30px;
-      font-size: 18px;
-      background-color: #1c88e0;
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #review_heading{
-      color: black;
-      position: absolute;
-      top: 5%;
-      left: 20%;
-      transform: translate(-50%,-50);
-      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
-    }
-    #description{
-      color: black;
-      position: absolute;
-      top: 41%;
-      left: 50%;
-      width: 80%;
-      transform: translate(-50%,-50%);
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 30px;
-    }
-    #back{
-      position: fixed;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      object-fit: cover;
-      opacity: 0.9;
-    }
-    #formm{
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      height: 50%;
-      width: 40%;
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 15px;
-      box-shadow: 0 0 50px 10px rgba(0, 0, 0, 0.5);
-    }
-  </style>
-  <script>
-    let imageIndex = 1;
-
-    function changeImage() {
-      imageIndex = (imageIndex % 10) + 1;
-      const newImage = `${imageIndex}.JPG`;
-      document.querySelector('#sphere').setAttribute('material', 'src', newImage);
-    }
-
-    function enterVR() {
-      document.getElementById('view_vr').style.display = 'none';
-      const scene = document.getElementById('scene_id');
-      scene.style.display = 'block';
-      scene.enterVR();
-    }
-  </script>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <title>Joystick Sphere Rotation with Buttons</title>
 </head>
 <body>
-  <div id="page1">
-    <img src="./background_image.jpg" alt="" id="back">
-    <div id="formm">
-      <h1 id="review_heading">Chettinad Image Review</h1>
-      <ul id="description">
-        <li>This is a Sample VR Image Reviewer</li>
-        <li>Use VR Headset</li>
-        <li>Use Hand Controller to Change Image</li>
-        <li>It might take some time in the beginning for changing the image, but will be fixed automatically</li>
-        <li>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=example@example.com&su=Subject&body=Body%20Text" target="_blank">Feedback</a>
-        </li>
-      </ul>
-      <button id="view_vr" onclick="enterVR()">View in VR</button>
-    </div>
-   
-  </div>
-  
-  <a-scene id="scene_id">
-    <a-entity 
-      id="sphere"
-      geometry="primitive: sphere; radius: 10" 
-      material="src: 1.JPG; side: back; shader: flat" 
-      scale="-1 1 1">
-    </a-entity>
+  <a-scene vr-mode-ui="enabled: true">
+    <a-entity id="camera-rig" position="0 1.6 0">
+      <a-camera>
+        <a-entity 
+          id="rotatingSphere"
+          geometry="primitive: sphere; radius: 5000" 
+          material="shader: flat; src: 1.JPG; side: back" 
+          position="0 0 0">
 
-    <a-entity camera look-controls wasd-controls>
-    </a-entity>
+          <a-entity 
+            id="nextButton"
+            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            material="color: blue" 
+            position="0 1 -1.8" 
+            text="value: Next Image; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
+        </a-entity>
+      </a-camera>
 
-    <a-entity 
-      id="right-controller"
-      laser-controls="hand: right" 
-      raycaster="objects: .clickable"
-      line="color: #FF0000; opacity: 0.5">
+      <a-entity
+        id="rightController"
+        laser-controls="hand: right"
+        raycaster="objects: .clickable"
+        thumbstick-moved>
+      </a-entity>
     </a-entity>
-
-    <a-box 
-      class="clickable"
-      position="0 0 -5" 
-      depth="0.1" width="1" height="0.5" 
-      color="#4CC3D9"
-      event-set__click="scale: 1.2 1.2 1.2; color: #3e9e8f" 
-      event-set__clickend="scale: 1 1 1; color: #4CC3D9"
-      onclick="changeImage()">
-      <a-text value="Change Image" position="0 0 0.1" align="center" color="#FFFFFF" width="3"></a-text>
-    </a-box>
   </a-scene>
+
+  <script>
+    const images = ["1.JPG", "2.JPG", "3.JPG", "4.JPG"];
+    let currentImageIndex = 0;
+
+    const sphere = document.querySelector("#rotatingSphere");
+    const nextButton = document.querySelector("#nextButton");
+    const rightController = document.querySelector("#rightController");
+
+    let rotation = { x: 0, y: 0, z: 0 };
+
+    rightController.addEventListener("thumbstickmoved", (event) => {
+      const { x, y } = event.detail;
+
+      rotation.x += y * 2; 
+      rotation.y += x * 2; 
+
+      sphere.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+    });
+
+    nextButton.addEventListener("click", () => {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+
+      sphere.setAttribute("material", "src", images[currentImageIndex]);
+
+      if (currentImageIndex === 0) {
+        alert("Looping back to the first image!");
+      }
+    });
+
+    nextButton.addEventListener("mouseenter", () => {
+      nextButton.setAttribute("material", "color", "green");
+    });
+
+    nextButton.addEventListener("mouseleave", () => {
+      nextButton.setAttribute("material", "color", "blue");
+    });
+  </script>
 </body>
 </html>
-  

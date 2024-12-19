@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chettinad Image Review</title>
+  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    #scene_id {
+      display: none;
+    }
+    #view_vr {
+      display: none;
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #1c88e0;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #review_heading{
+      color: white;
+      position: absolute;
+      top: 5%;
+      left:5%;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+      font-size: 80px;
+      margin: 0;
+    }
+    #back{
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      opacity: 0.5;
+    }
+
+    #version_code{
+        color: rgba(255, 255, 255, 0.614);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        position: absolute;
+        right: -2%;
+        bottom: -2%;
+        transform: translate(-50%,-50%);
+        font-size: 15px;
+    }
+    #inside_heading{
+        background-color:rgb(18, 112, 200);
+        font-size: 25px;
+        padding: 15px 10px 15px 10px;
+        line-height: 10px;
+        position: absolute;
+        top: 70%;
+        left: 85%;
+    }
+    #start{
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #1c88e0;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px; 
+    }
+  </style>
+  <script>
+    let imageIndex = 1;
+
+    function changeImage() {
+      imageIndex = (imageIndex % 10) + 1;
+      const newImage = `${imageIndex}.JPG`;
+      document.querySelector('#sphere').setAttribute('material', 'src', newImage);
+    }
+
+    function enterVR() {
+      document.getElementById('view_vr').style.display = 'none';
+      const scene = document.getElementById('scene_id');
+      scene.style.display = 'block';
+      scene.enterVR();
+    }
+  </script>
+</head>
+<body>
+  <div id="page1">
+    <img src="./background_image.jpg" alt="" id="back">
+    <h1 id="review_heading">Chettinad <br> Tourism <span id="inside_heading">VR</span></h1>
+    <button id="start">START</button>
+    <button id="view_vr" onclick="enterVR()">Take Tour</button>
+    <p id="version_code">VERSION 0.0.1.7</p>
+
+  </div>
+  
+  <a-scene vr-mode-ui="enabled: true" id="scene_id">
+    <a-entity id="camera-rig" position="0 1.6 0">
+      <a-camera>
+        <a-entity 
+          id="rotatingSphere"
+          geometry="primitive: sphere; radius: 5000" 
+          material="shader: flat; src: 1.JPG; side: back" 
+          position="0 0 0">
+
+          <a-entity 
+            id="nextButton"
+            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            material="color: blue" 
+            position="0 1 -1.8" 
+            text="value: Next Image; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
+        </a-entity>
+      </a-camera>
+
+      <a-entity
+        id="rightController"
+        laser-controls="hand: right"
+        raycaster="objects: .clickable"
+        thumbstick-moved>
+      </a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    const images = ["1.JPG", "2.JPG", "3.JPG", "4.JPG"];
+    let currentImageIndex = 0;
+
+    const sphere = document.querySelector("#rotatingSphere");
+    const nextButton = document.querySelector("#nextButton");
+    const rightController = document.querySelector("#rightController");
+
+    let rotation = { x: 0, y: 0, z: 0 };
+
+    rightController.addEventListener("thumbstickmoved", (event) => {
+      const { x, y } = event.detail;
+
+      rotation.x += y * 2; 
+      rotation.y += x * 2; 
+
+      sphere.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+    });
+
+    nextButton.addEventListener("click", () => {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+
+      sphere.setAttribute("material", "src", images[currentImageIndex]);
+
+      if (currentImageIndex === 0) {
+        alert("Looping back to the first location!");
+      }
+    });
+
+    nextButton.addEventListener("mouseenter", () => {
+      nextButton.setAttribute("material", "color", "green");
+    });
+
+    nextButton.addEventListener("mouseleave", () => {
+      nextButton.setAttribute("material", "color", "blue");
+    });
+  </script>
+</body>
+</html>
+  
