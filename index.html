@@ -196,7 +196,7 @@
           <a-entity 
             id="nextButton"
             geometry="primitive: plane; width: 0.3; height: 0.2" 
-            material="color: blue" 
+            material="color: rgb(73, 137, 235); opacity:0.8" 
             position="0 1 -1.8" 
             text="value: next; color: white;width:2; align: center"
             class="clickable">
@@ -205,7 +205,7 @@
           <a-entity 
             id="backButton"
             geometry="primitive: plane; width: 0.3; height: 0.2" 
-            material="color: blue" 
+            material="color: rgb(73, 137, 235); opacity:0.8" 
             position="0 0.7 -1.8" 
             text="value: back; color: white;width:2; align: center"
             class="clickable">
@@ -214,9 +214,18 @@
           <a-entity 
             id="playButton"
             geometry="primitive: plane; width: 0.35; height: 0.2" 
-            material="color: blue" 
+            material="color: rgb(73, 137, 235); opacity:0.8" 
             position="1 1 -1.8" 
             text="value: unmute; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
+
+          <a-entity 
+            id="exitButton"
+            geometry="primitive: plane; width: 0.35; height: 0.2" 
+            material="color: rgb(73, 137, 235); opacity:0.8" 
+            position="1 0.7 -1.8" 
+            text="value: exit; color: white;width:2; align: center"
             class="clickable">
           </a-entity>
         </a-entity>
@@ -247,6 +256,7 @@
     const nextButton = document.querySelector("#nextButton");
     const playButton = document.querySelector("#playButton");
     const backButton = document.querySelector("#backButton");
+    const exitButton = document.querySelector("#exitButton");
     const rightController = document.querySelector("#rightController");
 
     let rotation = { x: 0, y: 0, z: 0 };
@@ -297,13 +307,21 @@
       red(backButton);
     });
 
+    exitButton.addEventListener("mouseenter", () => {
+      green(exitButton);
+    });
+
+    exitButton.addEventListener("mouseleave", () => {
+      red(exitButton);
+    });
+
 
     function green(colorr){
       colorr.setAttribute("material", "color", "green");
     }
 
     function red(colorrr){
-      colorrr.setAttribute("material", "color", "blue");
+      colorrr.setAttribute("material", "color", "rgb(73, 137, 235)");
     }
 
     var playing = 0;
@@ -322,7 +340,9 @@
         }
     });
 
-    
+    exitButton.addEventListener('click',function(){
+      location.reload();
+    })
   </script>
 </body>
 </html>
