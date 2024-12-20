@@ -195,19 +195,28 @@
 
           <a-entity 
             id="nextButton"
-            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            geometry="primitive: plane; width: 0.3; height: 0.2" 
             material="color: blue" 
             position="0 1 -1.8" 
-            text="value: Next Image; color: white;width:2; align: center"
+            text="value: next; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
+
+          <a-entity 
+            id="backButton"
+            geometry="primitive: plane; width: 0.3; height: 0.2" 
+            material="color: blue" 
+            position="0 0.7 -1.8" 
+            text="value: back; color: white;width:2; align: center"
             class="clickable">
           </a-entity>
 
           <a-entity 
             id="playButton"
-            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            geometry="primitive: plane; width: 0.35; height: 0.2" 
             material="color: blue" 
             position="1 1 -1.8" 
-            text="value: Audio; color: white;width:2; align: center"
+            text="value: unmute; color: white;width:2; align: center"
             class="clickable">
           </a-entity>
         </a-entity>
@@ -237,6 +246,7 @@
     const sphere = document.querySelector("#rotatingSphere");
     const nextButton = document.querySelector("#nextButton");
     const playButton = document.querySelector("#playButton");
+    const backButton = document.querySelector("#backButton");
     const rightController = document.querySelector("#rightController");
 
     let rotation = { x: 0, y: 0, z: 0 };
@@ -254,10 +264,13 @@
       currentImageIndex = (currentImageIndex + 1) % images.length;
 
       sphere.setAttribute("material", "src", images[currentImageIndex]);
+    });
 
-     // if (currentImageIndex === 0) {
-       // alert("Looping back to the first location!");
-    //  }
+    backButton.addEventListener("click", () => {
+      currentImageIndex = (currentImageIndex - 1) % images.length;
+
+      sphere.setAttribute("material", "src", images[currentImageIndex]);
+
     });
 
     nextButton.addEventListener("mouseenter", () => {
@@ -276,6 +289,14 @@
       red(playButton);
     });
 
+    backButton.addEventListener("mouseenter", () => {
+      green(backButton);
+    });
+
+    backButton.addEventListener("mouseleave", () => {
+      red(backButton);
+    });
+
 
     function green(colorr){
       colorr.setAttribute("material", "color", "green");
@@ -285,11 +306,23 @@
       colorrr.setAttribute("material", "color", "blue");
     }
 
+    var playing = 0;
+    const audioPlayer = document.getElementById('audioPlayer');
+    playButton.addEventListener('click', () => {
+        if(playing==0){
+          audioPlayer.play();
+          playButton.setAttribute("text","value","mute");
+          playing = 1;
+        }
+        else{
+          playButton.setAttribute("text","value","unmute");
+          playing = 0;
+          audioPlayer.pause();
 
-        const audioPlayer = document.getElementById('audioPlayer');
-        playButton.addEventListener('click', () => {
-            audioPlayer.play();
-        });
+        }
+    });
+
+    
   </script>
 </body>
 </html>
