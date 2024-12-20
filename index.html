@@ -153,6 +153,12 @@
   </script>
 </head>
 <body>
+
+  <audio id="audioPlayer" src="./audio narration.mp3"></audio>
+
+  
+
+  
   <div id="page1">
     <img src="./background_image.jpg" alt="" id="back" draggable="false">
     <div id="prepare_vr">
@@ -195,6 +201,15 @@
             text="value: Next Image; color: white;width:2; align: center"
             class="clickable">
           </a-entity>
+
+          <a-entity 
+            id="playButton"
+            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            material="color: blue" 
+            position="1 1 -1.8" 
+            text="value: Audio; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
         </a-entity>
       </a-camera>
 
@@ -221,6 +236,7 @@
 
     const sphere = document.querySelector("#rotatingSphere");
     const nextButton = document.querySelector("#nextButton");
+    const playButton = document.querySelector("#playButton");
     const rightController = document.querySelector("#rightController");
 
     let rotation = { x: 0, y: 0, z: 0 };
@@ -239,18 +255,41 @@
 
       sphere.setAttribute("material", "src", images[currentImageIndex]);
 
-      if (currentImageIndex === 0) {
-        alert("Looping back to the first location!");
-      }
+     // if (currentImageIndex === 0) {
+       // alert("Looping back to the first location!");
+    //  }
     });
 
     nextButton.addEventListener("mouseenter", () => {
-      nextButton.setAttribute("material", "color", "green");
+      green(nextButton);
     });
 
     nextButton.addEventListener("mouseleave", () => {
-      nextButton.setAttribute("material", "color", "blue");
+      red(nextButton);
     });
+
+    playButton.addEventListener("mouseenter", () => {
+      green(playButton);
+    });
+
+    playButton.addEventListener("mouseleave", () => {
+      red(playButton);
+    });
+
+
+    function green(colorr){
+      colorr.setAttribute("material", "color", "green");
+    }
+
+    function red(colorrr){
+      colorrr.setAttribute("material", "color", "blue");
+    }
+
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        playButton.addEventListener('click', () => {
+            audioPlayer.play();
+        });
   </script>
 </body>
 </html>
