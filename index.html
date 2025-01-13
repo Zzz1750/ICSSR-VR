@@ -3,183 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chettinad Image Review</title>
-  <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: black;
-    }
-    #scene_id {
-      display: none;
-    }
-    #view_vr {
-      position: absolute;
-      top: 150%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 10px 20px;
-      font-size: 15px;
-      background-color: #1c88e0;
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #review_heading{
-      color: rgba(255, 255, 255, 0.95);
-      position: absolute;
-      top: 5%;
-      left:3%;
-      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
-      font-size: 80px;
-      margin: 0;
-    }
-    #back{
-      position: fixed;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      object-fit: cover;
-      opacity: 0.5;
-    }
-
-    #version_code{
-        color: rgba(255, 255, 255, 0.614);
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        position: absolute;
-        right: -2%;
-        bottom: -2%;
-        transform: translate(-50%,-50%);
-        font-size: 12px;
-    }
-    #inside_heading{
-        background-color:rgb(18, 112, 200);
-        font-size: 25px;
-        padding: 15px 10px 15px 10px;
-        line-height: 10px;
-        position: absolute;
-        top: 70%;
-        left: 85%;
-    }
-    #start{
-      position: absolute;
-      top: 52%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 10px 20px;
-      font-size: 13px;
-      background-color:rgb(18, 112, 200);
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px; 
-    }
-    #team_name{
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 30px;
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-    }
-    #phase_name{
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 12px;
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-    }
-    #topic_name{
-        color: rgba(255, 255, 255, 0.9);
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        font-size: 30px;
-        text-align: center;
-    }
-    #vr360_icon{
-        filter: invert(100%);
-        width: 70px;
-        position: absolute;
-        top: -40%;
-        left: -25%;
-    }
-    #vr360_heading{
-        color: rgba(255, 255, 255, 0.95);
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        position: absolute;
-        top: 30%;
-        left: 53%;
-        transform: translate(-50%,-50%);
-        font-size: 35px;
-        text-align: center;
-    }
-    #list_parent{
-        color: rgba(255, 255, 255, 0.8);
-        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        position: absolute;
-        top: 45%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        line-height: 30px;
-    }
-    #ready_vr{
-        display: none;
-    }
-  </style>
-  <script>
-    let imageIndex = 1;
-
-    function changeImage() {
-      imageIndex = (imageIndex % 10) + 1;
-      const newImage = `${imageIndex}.png`;
-      document.querySelector('#sphere').setAttribute('material', 'src', newImage);
-    }
-
-    function enterVR() {
-      document.getElementById('view_vr').style.display = 'none';
-      const scene = document.getElementById('scene_id');
-      scene.style.display = 'block';
-      scene.enterVR();
-    }
-  </script>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <title>Joystick Sphere Rotation with Buttons</title>
 </head>
 <body>
-
-  <audio id="audioPlayer" src="./audio narration.mp3"></audio>
-  <div id="page1">
-    <img src="./background_image.jpg" alt="" id="back" draggable="false">
-    <div id="prepare_vr">
-        <h1 id="topic_name">Inclusive Tourism through the <br> Exploration of Chettinad Architecture</h1>
-        <button id="start">START</button>
-    </div>
-    <div id="ready_vr">
-        <h1 id="vr360_heading"><img id="vr360_icon" src="./360-degrees.png" alt="">Immersive Experience</h1>
-        <ul id="list_parent">
-            <li>Wear your headset properly</li>
-            <li>Use the right joystick to move</li>
-            <li>Images may take time to load (fix coming soon)</li>
-            <li>Use the trigger to interact</li>
-            <li>Stay in a safe, open area</li>
-            <button id="view_vr" onclick="enterVR()">Enter VR</button>
-        </ul>
-    </div>
-    <h1 id="review_heading">Chettinad <br> Tourism <span id="inside_heading">VR</span></h1>
-    <h1 id="team_name"><span style="font-size:20px;">By</span><br> WAYFARER VR</h1>
-    <h1 id="phase_name">PHASE 2</h1>
-    <p id="version_code">VERSION 0.0.1.7</p>
-
-  </div>
-  
-  <a-scene vr-mode-ui="enabled: true" id="scene_id">
+  <a-scene vr-mode-ui="enabled: true">
     <a-entity id="camera-rig" position="0 1.6 0">
       <a-camera>
         <a-entity 
@@ -190,31 +18,12 @@
 
           <a-entity 
             id="nextButton"
-            geometry="primitive: plane; width: 0.3; height: 0.2" 
-            material="color: rgb(73, 137, 235); opacity:0.8" 
+            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            material="color: blue" 
             position="0 1 -1.8" 
-            text="value: next; color: white;width:2; align: center"
+            text="value: Next Image; color: white;width:2; align: center"
             class="clickable">
           </a-entity>
-
-          <a-entity 
-            id="backButton"
-            geometry="primitive: plane; width: 0.3; height: 0.2" 
-            material="color: rgb(73, 137, 235); opacity:0.8" 
-            position="0 0.7 -1.8" 
-            text="value: back; color: white;width:2; align: center"
-            class="clickable">
-          </a-entity>
-
-          <a-entity 
-            id="playButton"
-            geometry="primitive: plane; width: 0.35; height: 0.2" 
-            material="color: rgb(73, 137, 235); opacity:0.8" 
-            position="1 1 -1.8" 
-            text="value: unmute; color: white;width:2; align: center"
-            class="clickable">
-          </a-entity>
-
         </a-entity>
       </a-camera>
 
@@ -228,21 +37,11 @@
   </a-scene>
 
   <script>
-    document.getElementById('start').addEventListener('click',function(){
-        document.getElementById('prepare_vr').style.display='none';
-        document.getElementById('ready_vr').style.display='block';
-
-    });
-  </script>
-
-  <script>
     const images = ["1.png", "2.png", "3.png", "4.png"];
     let currentImageIndex = 0;
 
     const sphere = document.querySelector("#rotatingSphere");
     const nextButton = document.querySelector("#nextButton");
-    const playButton = document.querySelector("#playButton");
-    const backButton = document.querySelector("#backButton");
     const rightController = document.querySelector("#rightController");
 
     let rotation = { x: 0, y: 0, z: 0 };
@@ -260,67 +59,19 @@
       currentImageIndex = (currentImageIndex + 1) % images.length;
 
       sphere.setAttribute("material", "src", images[currentImageIndex]);
-    });
 
-    backButton.addEventListener("click", () => {
-      currentImageIndex = (currentImageIndex - 1) % images.length;
-
-      sphere.setAttribute("material", "src", images[currentImageIndex]);
-
+      if (currentImageIndex === 0) {
+        alert("Looping back to the first image!");
+      }
     });
 
     nextButton.addEventListener("mouseenter", () => {
-      green(nextButton);
+      nextButton.setAttribute("material", "color", "green");
     });
 
     nextButton.addEventListener("mouseleave", () => {
-      red(nextButton);
+      nextButton.setAttribute("material", "color", "blue");
     });
-
-    playButton.addEventListener("mouseenter", () => {
-      green(playButton);
-    });
-
-    playButton.addEventListener("mouseleave", () => {
-      red(playButton);
-    });
-
-    backButton.addEventListener("mouseenter", () => {
-      green(backButton);
-    });
-
-    backButton.addEventListener("mouseleave", () => {
-      red(backButton);
-    });
-
-
-
-    function green(colorr){
-      colorr.setAttribute("material", "color", "green");
-    }
-
-    function red(colorrr){
-      colorrr.setAttribute("material", "color", "rgb(73, 137, 235)");
-    }
-
-    var playing = 0;
-    const audioPlayer = document.getElementById('audioPlayer');
-    playButton.addEventListener('click', () => {
-        if(playing==0){
-          audioPlayer.play();
-          playButton.setAttribute("text","value","mute");
-          playing = 1;
-        }
-        else{
-          playButton.setAttribute("text","value","unmute");
-          playing = 0;
-          audioPlayer.pause();
-
-        }
-    });
-
-
   </script>
 </body>
 </html>
-  
