@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <title>Joystick Sphere Rotation with Buttons</title>
+</head>
+<body>
+  <a-scene vr-mode-ui="enabled: true">
+    <a-entity id="camera-rig" position="0 1.6 0">
+      <a-camera>
+        <a-entity 
+          id="rotatingSphere"
+          geometry="primitive: sphere; radius: 5000" 
+          material="shader: flat; src: 1.png; side: back" 
+          position="0 0 0">
+
+          <a-entity 
+            id="nextButton"
+            geometry="primitive: plane; width: 0.7; height: 0.3" 
+            material="color: blue" 
+            position="0 1 -1.8" 
+            text="value: Next Image; color: white;width:2; align: center"
+            class="clickable">
+          </a-entity>
+        </a-entity>
+      </a-camera>
+
+      <a-entity
+        id="rightController"
+        laser-controls="hand: right"
+        raycaster="objects: .clickable"
+        thumbstick-moved>
+      </a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    const images = ["1.png", "2.png", "3.png", "4.png"];
+    let currentImageIndex = 0;
+
+    const sphere = document.querySelector("#rotatingSphere");
+    const nextButton = document.querySelector("#nextButton");
+    const rightController = document.querySelector("#rightController");
+
+    let rotation = { x: 0, y: 0, z: 0 };
+
+    rightController.addEventListener("thumbstickmoved", (event) => {
+      const { x, y } = event.detail;
+
+      rotation.x += y * 2; 
+      rotation.y += x * 2; 
+
+      sphere.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+    });
+
+    nextButton.addEventListener("click", () => {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+
+      sphere.setAttribute("material", "src", images[currentImageIndex]);
+
+      if (currentImageIndex === 0) {
+        alert("Looping back to the first image!");
+      }
+    });
+
+    nextButton.addEventListener("mouseenter", () => {
+      nextButton.setAttribute("material", "color", "green");
+    });
+
+    nextButton.addEventListener("mouseleave", () => {
+      nextButton.setAttribute("material", "color", "blue");
+    });
+  </script>
+</body>
+</html>
